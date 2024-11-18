@@ -1,152 +1,310 @@
-# ProExtract - Web Scraping and Vulnerability Scanning Tool ( on updation Comming soon )
+# ProExtract - Web Scraper for OEM Vulnerability Reporting
 
-ProExtract is a comprehensive web scraping and vulnerability scanning tool designed to help users extract data from websites and identify security vulnerabilities. It offers a full-stack solution with both backend and frontend components, allowing users to input website URLs, view detailed reports, and analyze potential security risks.
+A robust web scraping and vulnerability reporting tool designed to identify critical and high-severity vulnerabilities in OEM (Original Equipment Manufacturer) equipment across IT and OT systems.
+
+## Features
+
+- 🔍 Automated vulnerability scanning for OEM equipment
+- 🏷️ Smart categorization of vulnerabilities by severity
+- 📊 Detailed reporting with export capabilities
+- 🔐 Secure user authentication
+- 🏭 Support for both IT and OT systems
 
 ## Project Structure
 
-### Backend
-
-The backend contains all the server-side code, including the application logic, routes, database models, and utilities.
-
-- **backend/**
-  - **`__init__.py`**: Initialize the Flask app and set up the application context.
-  - **`app.py`**: Main application file that contains routes for login, dashboard, and vulnerability scanning.
-  - **`models.py`**: Contains database models for User, Store, and Vulnerability.
-  - **`views.py`**: Handles the route logic for rendering views like login, dashboard, etc.
-  - **`utils.py`**: Helper functions for web scraping, vulnerability scanning, and other utilities.
-  - **`forms.py`**: Form definitions for user authentication, store submission, and data inputs.
-  - **`config.py`**: Configuration settings for the app, including database setup, secret keys, and other environment configurations.
-  - **`scrape/`**: Contains the logic for web scraping and vulnerability scanning.
-    - **`scraper.py`**: Main script for web scraping and detecting vulnerabilities.
-    - **`utils.py`**: Helper functions for sending HTTP requests, parsing HTML, and handling vulnerability detection.
-  - **`requirements.txt`**: Lists Python dependencies (Flask, SQLAlchemy, etc.).
-
-### Frontend
-
-The frontend folder contains the HTML, CSS, and JavaScript files that handle the user interface.
-
-- **frontend/**
-  - **`index.html`**: The homepage that includes user login and registration forms.
-  - **`dashboard.html`**: The user dashboard for entering a website URL and viewing vulnerability reports.
-  - **`results.html`**: Displays detailed vulnerability results for each scanned website.
-  - **`style.css`**: Styles for the frontend pages.
-  - **`script.js`**: JavaScript to manage form submissions, AJAX requests, and dynamic page updates.
-  - **`assets/`**: Static files like images, fonts, and logos.
-    - **`logo.png`**: Optional project logo for branding.
-
-### Migrations
-
-This folder contains database migration files if you are using **Flask-Migrate** for schema changes.
-
-- **migrations/**
-  - **`versions/`**: Stores version-controlled database migration files.
-
-### Tests
-
-The tests folder contains unit tests to ensure the correctness of the application.
-
-- **tests/**
-  - **`test_app.py`**: Tests for routes, views, and general functionality.
-  - **`test_scraper.py`**: Tests for the web scraping and vulnerability scanning functionality.
-  - **`test_models.py`**: Tests for the database models, ensuring correct data storage and retrieval.
-
-### Other Files
-
-- **`.gitignore`**: Specifies which files and directories should be ignored by Git (e.g., environment files, virtual environment).
-- **`Dockerfile`**: Docker configuration file to containerize the application.
-- **`.env`**: Environment variables for the app (e.g., database credentials, API keys).
-- **`main.py`**: The main entry point for the application, typically for launching the app.
-- **`requirements.txt`**: Python package dependencies required for running the project.
+```bash
+proextract/
+├── backend/
+│   ├── __init__.py
+│   ├── app.py
+│   ├── models.py
+│   ├── views.py
+│   ├── utils.py
+│   ├── forms.py
+│   ├── config.py
+│   ├── scrape/
+│   │   ├── scraper.py
+│   │   └── utils.py
+│   └── requirements.txt
+├── frontend/
+│   ├── templates/
+│   │   ├── index.html
+│   │   ├── dashboard.html
+│   │   └── results.html
+│   ├── static/
+│   │   ├── css/
+│   │   └── js/
+├── migrations/
+├── tests/
+└── docker/
+```
 
 ## Installation
 
-Follow the steps below to set up and run ProExtract on your local machine.
-
 ### Prerequisites
 
-Ensure you have the following installed:
+```bash
+# Install Python 3.8+
+python --version  # Should be 3.8 or higher
 
-- Python 3.8+ 
-- Pip (Python package manager)
-- Docker (for containerization)
+# Install pip dependencies
+pip install -r requirements.txt
+```
 
-### Clone the Repository
+### Core Dependencies
 
-Clone the project repository:
+```python
+# requirements.txt
+Flask==2.0.1
+SQLAlchemy==1.4.23
+BeautifulSoup4==4.9.3
+requests==2.26.0
+pandas==1.3.3
+PyJWT==2.1.0
+python-dotenv==0.19.0
+```
 
+### Quick Start
+
+1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/proextract.git
-
-## Structure 
-proextract/
-│  
-├── backend/                   # Backend-related code  
-│ ├── __init__.py               # Initialize Flask app  
-│ ├── app.py                    # Main application file with routes (Login, Dashboard)  
-│ ├── models.py                 # Database models (User, Store, Vulnerability)  
-│ ├── views.py                  # Route handling for views (login, dashboard, etc.)  
-│ ├── utils.py                  # Helper functions for scanning, scraping, etc.  
-│ ├── forms.py                  # Form definitions for login, store submission, etc.  
-│ ├── config.py                 # Configuration settings (database, secret keys)  
-│ ├── scrape/                   # Web scraping and vulnerability scanning logic  
-│ │ ├── scraper.py              # Web scraping and vulnerability detection script  
-│ │ └── utils.py                # Helper functions for scraping (requesting pages, parsing data)  
-│ └── requirements.txt          # Python dependencies (Flask, SQLAlchemy, etc.)  
-│  
-├── frontend/                   # Frontend-related files  
-│ ├── index.html                # Homepage (login, register page)  
-│ ├── dashboard.html            # User dashboard (enter store URL, view reports)  
-│ ├── results.html              # Vulnerability results page (for each store)  
-│ ├── style.css                 # CSS for frontend pages  
-│ ├── script.js                 # JavaScript to handle form submissions, AJAX calls  
-│ └── assets/                   # Static assets (images, fonts, etc.)  
-│ └── logo.png                  # Optional: Project logo for branding  
-│  
-├── migrations/                 # Database migrations (if using Flask-Migrate)  
-│ └── versions/                 # Version-controlled migrations  
-│  
-├── tests/                      # Unit tests and test cases  
-│ ├── test_app.py               # Tests for routes and views  
-│ ├── test_scraper.py           # Tests for scraping functionality  
-│ └── test_models.py            # Tests for database models  
-│  
-└── .gitignore                  # Git ignore file for unnecessary files/folders  
-├── Dockerfile                  # Docker configuration  
-├── .env                        # Environment variables (to be kept secure)  
-├── .gitignore                  # Git ignore file  
-└── main.py                     # Main entry point for the application  
-
-
- Install Dependencies
-Navigate to the project directory and install the required Python dependencies:
-
 cd proextract
+```
+
+2. Set up your environment:
+```bash
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # Unix
+.\venv\Scripts\activate   # Windows
+
+# Install dependencies
 pip install -r requirements.txt
-Set Up the Database
-Run the following commands to initialize the database:
+```
 
-python backend/manage.py db init
-python backend/manage.py db migrate
-python backend/manage.py db upgrade
-Run the Application
-To start the Flask app, run the following command:
+3. Configure your environment variables:
+```bash
+# .env
+DATABASE_URL=postgresql://user:password@localhost:5432/proextract
+SECRET_KEY=your-secret-key
+API_KEY=your-api-key
+```
 
+## Core Implementation
 
-python backend/app.py
-Alternatively, if using Docker, build and run the application in a container:
+### Database Models
 
+```python
+# backend/models.py
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
 
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'users'
+    
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    email = Column(String(120), unique=True, nullable=False)
+    password_hash = Column(String(128), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class Vulnerability(Base):
+    __tablename__ = 'vulnerabilities'
+    
+    id = Column(Integer, primary_key=True)
+    oem_id = Column(Integer, ForeignKey('oem_equipment.id'))
+    severity = Column(String(20), nullable=False)
+    description = Column(String(500), nullable=False)
+    cve_id = Column(String(20))
+    discovered_at = Column(DateTime, default=datetime.utcnow)
+```
+
+### Scraping Implementation
+
+```python
+# backend/scrape/scraper.py
+import requests
+from bs4 import BeautifulSoup
+from typing import List, Dict
+
+class OEMVulnerabilityScanner:
+    def __init__(self, base_url: str, api_key: str = None):
+        self.base_url = base_url
+        self.api_key = api_key
+        self.session = requests.Session()
+        
+    def scan_vulnerabilities(self) -> List[Dict]:
+        """Scans OEM equipment for vulnerabilities."""
+        try:
+            response = self.session.get(
+                self.base_url,
+                headers={'Authorization': f'Bearer {self.api_key}'}
+            )
+            soup = BeautifulSoup(response.text, 'html.parser')
+            
+            vulnerabilities = []
+            for vuln in soup.find_all('div', class_='vulnerability-item'):
+                vulnerability = {
+                    'severity': vuln.get('data-severity', 'Unknown'),
+                    'description': vuln.find('p', class_='description').text.strip(),
+                    'cve_id': vuln.get('data-cve-id'),
+                    'affected_systems': vuln.get('data-affected-systems', '').split(',')
+                }
+                if vulnerability['severity'].upper() in ['CRITICAL', 'HIGH']:
+                    vulnerabilities.append(vulnerability)
+                    
+            return vulnerabilities
+            
+        except requests.RequestException as e:
+            raise Exception(f"Failed to scan vulnerabilities: {str(e)}")
+```
+
+### API Implementation
+
+```python
+# backend/app.py
+from flask import Flask, request, jsonify
+from flask_jwt_extended import JWTManager, jwt_required
+from .scrape.scraper import OEMVulnerabilityScanner
+
+app = Flask(__name__)
+jwt = JWTManager(app)
+
+@app.route('/api/scan', methods=['POST'])
+@jwt_required()
+def scan_equipment():
+    """Endpoint to scan OEM equipment for vulnerabilities."""
+    data = request.get_json()
+    
+    if not data or 'url' not in data:
+        return jsonify({'error': 'Missing URL parameter'}), 400
+        
+    try:
+        scanner = OEMVulnerabilityScanner(
+            base_url=data['url'],
+            api_key=app.config['API_KEY']
+        )
+        vulnerabilities = scanner.scan_vulnerabilities()
+        
+        return jsonify({
+            'status': 'success',
+            'vulnerabilities': vulnerabilities
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+## Usage
+
+### Basic Scanner Usage
+
+```python
+# Example usage of the vulnerability scanner
+from backend.scrape.scraper import OEMVulnerabilityScanner
+
+# Initialize scanner
+scanner = OEMVulnerabilityScanner(
+    base_url="https://oem-equipment-url.com",
+    api_key="your-api-key"
+)
+
+# Scan for vulnerabilities
+vulnerabilities = scanner.scan_vulnerabilities()
+
+# Process results
+for vuln in vulnerabilities:
+    print(f"Severity: {vuln['severity']}")
+    print(f"Description: {vuln['description']}")
+    print(f"CVE ID: {vuln['cve_id']}")
+    print("Affected Systems:", ", ".join(vuln['affected_systems']))
+    print("-" * 50)
+```
+
+### Docker Deployment
+
+```dockerfile
+# Dockerfile
+FROM python:3.8-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+ENV FLASK_APP=backend/app.py
+ENV FLASK_ENV=production
+
+EXPOSE 5000
+
+CMD ["flask", "run", "--host=0.0.0.0"]
+```
+
+Build and run the Docker container:
+```bash
 docker build -t proextract .
-docker run -p 5000:5000 proextract
-Visit http://localhost:5000 to access the application.
+docker run -p 5000:5000 -e DATABASE_URL=postgresql://user:pass@host:5432/db proextract
+```
 
-Usage
-Login and Dashboard
-Open the homepage (index.html) and log in or register a new account.
-After logging in, you will be redirected to the dashboard where you can input a website URL to scan for vulnerabilities.
-Enter a URL and click the Scan button. The tool will scrape the site, detect vulnerabilities, and display the results on the results page.
-Viewing Results
-Once the scan is complete, you'll be shown a detailed report with the identified vulnerabilities, categorized by severity.
+## Testing
 
-Exporting Data
-After scanning, you can export the results in various formats such as JSON, CSV, or PDF by clicking the export button on the results page.
+```python
+# tests/test_scanner.py
+import unittest
+from backend.scrape.scraper import OEMVulnerabilityScanner
+
+class TestOEMVulnerabilityScanner(unittest.TestCase):
+    def setUp(self):
+        self.scanner = OEMVulnerabilityScanner(
+            base_url="https://test-oem-url.com",
+            api_key="test-api-key"
+        )
+
+    def test_vulnerability_scanning(self):
+        vulnerabilities = self.scanner.scan_vulnerabilities()
+        self.assertIsInstance(vulnerabilities, list)
+        
+        if vulnerabilities:
+            vuln = vulnerabilities[0]
+            self.assertIn('severity', vuln)
+            self.assertIn('description', vuln)
+            self.assertIn('cve_id', vuln)
+```
+
+Run tests:
+```bash
+python -m unittest discover tests
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -am 'Add feature'`
+4. Push to branch: `git push origin feature-name`
+5. Submit a Pull Request
+
+## License
+
+
+
+---
+
+## Security Notes
+
+- Always validate input URLs before scanning
+- Use rate limiting for API endpoints
+- Keep API keys and credentials secure
+- Regular security updates for dependencies
+- Monitor for false positives in vulnerability detection
+
+For questions or support, please open an issue or contact the maintainers.
