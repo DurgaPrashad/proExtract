@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>dp</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .home-content {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content:center;
+      align-items: center;
+    }
+
+    .home-content .social-media {
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+  .navbar.active {
+    display: block;
+  }
+}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="#" class="logo">portfolio</a>
+    <i class='bx bx-menu' id="menu-icon"></i>
+	  
+    <nav class="navbar">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="home" id="home">
+    <div class="home-content">
+      <div class="home-imag">
+        <img src="images/1.png" alt="">
+      </div>
+      <div>
+        <h3>hello, it's me</h3>
+        <h1>DurgaPrashad</h1>
+        <h3>And I am a <span>frontend developer</span></h3>
+        <p>—Tech enthusiast — student of Computer Science —'Explorer   — Always learning, always growing—building @proups.in</p>
+        <div class="social-media">
+          <a href="#"><i class='bx bxl-twitter'></i></a>
+          <a href="#"><i class='bx bxl-instagram-alt'></i></a>
+          <a href="https://www.linkedin.com/in/dp9966/"><i class='bx bxl-linkedin'></i></a>
+          <a href="#"><i class='bx bxl-facebook'></i></a>
+        </div>
+        <a href="#" class="btn">RESUME</a>
+      </div>
+    </div>
+  </section>
+
+ <section class="about" id="about">
+  <div class="about-container">
+    <div class="about-img">
+      <img src="images/1.png" alt="">
+    </div>
+    <div class="about-content">
+      <h2 style="font-size: 32px;">About <span style="font-size: 32px;">ME</span></h2>
+      <p style="font-size: 19px;">
+		  I'm Durga Prashad, a versatile professional skilled in technology and creativity. I can build complete web applications as a<span> full- stack developer </span>and create user-friendly interfaces as a UI/UX <span>designer</span>. With expertise in data science, I can analyze complex data to make informed decisions. As a <span>digital marketing</span> manager, I excel in promoting brands through various online channels. I also have experience as a creative<span> director</span>, leading teams and developing impactful campaigns. With my diverse skills, I'm ready to contribute to projects and businesses
+      </p>
+      <a href="#" class="btn">READ MORE</a>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="services" id="services">
+
+  <h2  style="font-size: 36px;">our <span>services</span></h2>
+ 
+
+  <div class="services-container">
+    <div class="services-box">
+      <i class='bx bx-code-alt'></i>
+      <h2>Web/App <span>Development</span></h2>
+      <p style="font-size: 15px;">
+    We specialize in creating customized websites and mobile applications that are user-friendly, responsive, and tailored to your specific business needs
+      </p>
+      <a href="#" class="btn">read more</a>
+    </div>
+
+    <div class="services-box">
+      <i class='bx bx-paint'></i>
+      <h2>Graphic <span>Designing</span></h2>
+      <p style="font-size: 15px;">
+In order to make your company stand out and effectively communicate, our skilled designers produce aesthetically attractive and impactful designs for branding, ads, and digital media.
+
+      </p>
+      <a href="#" class="btn">read more</a>
+    </div>
+
+    <div class="services-box">
+      <i class='bx bx-bar-chart-alt'></i>
+      <h2>Digital <span>Marketing</span></h2>
+       <p style="font-size: 15px;">
+    With the help of our all-encompassing digital marketing strategies, which include SEO, social media marketing, and content optimization, you can increase your online visibility and connect with your target audience. Drive traffic, increase brand visibility, and achieve online success
+      </p>
+      <a href="#" class="btn">read more</a>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <h2 class="heading" style="font-size: 36px;">Latest <span>projects</span></h2>
+
+<div class="services" id="services">
+
+  <div class="services__wrapper">
+    <div class="services__card">
+      <img src="images/p.png" alt="Project 1">
+      <h2>startup</h2>
+      <p>proups.in</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+    <div class="services__card">
+      <img src="images/3.png" alt="Project 2">
+      <h2>on going project</h2>
+      <p>provison</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+    <div class="services__card">
+      <img src="images/6.png" alt="Project 3">
+      <h2>Project 3</h2>
+      <p>procodz</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+    <div class="services__card">
+      <img src="images/1%20-%20Copy.png" alt="Project 4">
+      <h2>Project 4</h2>
+      <p>proqwiz</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+    <div class="services__card">
+      <img src="images/2.png" alt="Project 5">
+      <h2>ongoing</h2>
+      <p>prolink</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+    <div class="services__card">
+      <img src="images/5.png" alt="Project 6">
+      <h2>Project 6</h2>
+      <p>proshere</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+<div class="services__card">
+      <img src="images/7.png" alt="Project 6">
+      <h2>Project 6</h2>
+      <p>prostock</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div><div class="services__card">
+      <img src="images/8.png" alt="Project 6">
+      <h2>Project 6</h2>
+      <p>pro</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+<div class="services__card">
+      <img src="images/4.png" alt="Project 6">
+      <h2>Pro</h2>
+      <p>proshere</p>
+      <div class="services__btn"><button>Learn More</button></div>
+    </div>
+  </div>
+</div>
+	</section>
+
+	
+<section
+ class="contact" id="contact">
+  <h2 class="heading" style="font-size: 36px;">Contact <span>ME</span></h2>
+<form action="#">
+	
+	  <div class="input-box">
+
+          <input type="text" placeholder="full Name">
+		 <input type="Email" placeholder="Email address">  
+	</div>
+
+ <div class="input-box">
+
+          <input type="number" placeholder="Mobile number">
+		 <input type="text" placeholder="Email subject">  
+	</div>
+<textarea name="" id="" cols="30" rows="10" placeholder="your message"> </textarea>
+<input type="submit" value="send message" class="btn">
+
+</form>
+</section>
+
+<footer class="footer">
+  <div class="footer-text">
+    <p>&copy; 2023 by Durga prashad | All rights reserved</p>
+  </div>
+  <div class="footer-icon">
+    <a href="#home">
+      <i class='bx bx-up-arrow-alt'></i>
+     
+    </a>
+  </div>
+</footer>
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+</html>

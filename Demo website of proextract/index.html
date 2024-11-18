@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProExtract</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+   .report-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .report-card {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      width: 300px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .report-card h2 {
+      margin-bottom: 10px;
+    }
+    .home-content {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content:center;
+      align-items: center;
+    }
+
+    .home-content .social-media {
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        display: none;
+      }
+      .navbar.active {
+        display: block;
+      }
+    }
+    .logo-image {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px; /* Space between image and text */
+  }
+  .logo-text {
+    font-size: 1.5em; /* Adjust the size as needed */
+    font-weight: bold;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+    
+  </style>
+</head>
+<body>
+  <header class="header">
+   <a href="#" class="logo">
+      <img src="images/5.png" alt="ProExtract Logo" class="logo-image">
+      <span class="logo-text">ProExtract</span>
+    </a>
+    <i class='bx bx-menu' id="menu-icon"></i>
+	  
+    <nav class="navbar">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#report">Report</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="home" id="home">
+    <div class="home-content">
+      <div class="home-image">
+        <img src="images/security.png" alt="Cybersecurity">
+      </div>
+      <div>
+        <h3>Welcome to</h3>
+        <h1>ProExtract</h1>
+        <h3>Your automated solution for <span>monitoring OEM vulnerabilities</span></h3>
+        <p>— Stay updated with the latest critical and high severity vulnerabilities for IT and OT equipment — Automated email alerts with mitigation strategies — Ensuring timely response and protection.</p>
+        <div class="social-media">
+          <a href="#"><i class='bx bxl-twitter'></i></a>
+          <a href="#"><i class='bx bxl-linkedin'></i></a>
+          <a href="#"><i class='bx bxl-github'></i></a>
+        </div>
+        <a href="#" class="btn">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+   <div class="about-container">
+     <div class="about-img">
+       <video width="520" height="440" controls>
+         <source src="video/prolible - Made with Clipchamp.mp4" type="video/mp4">
+         Your browser does not support the video tag.
+       </video>
+     </div>
+     <div class="about-content">
+       <h2>About <span>ProExtract</span></h2>
+       <p>
+         The ProExtract is designed to help organizations in critical sectors stay informed about vulnerabilities in their IT and OT equipment. We provide real-time tracking of vulnerability disclosures from OEM websites and other trusted sources, ensuring you receive timely alerts about critical issues that could impact your business. Our automated solution helps mitigate risks by sharing detailed vulnerability reports and mitigation strategies.
+       </p>
+       <a href="#" class="btn">Learn More</a>
+     </div>
+   </div>
+ </section>
+
+  <section class="services" id="services">
+    <h2>Our <span>Services</span></h2>
+    <div class="services-container">
+      <div class="services-box">
+        <i class='bx bx-shield-quarter'></i>
+        <h2>Real-Time <span>Monitoring</span></h2>
+        <h3>
+          We track OEM websites for newly published vulnerabilities and instantly notify you about critical or high severity issues.
+        </h3>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+
+      <div class="services-box">
+        <i class='bx bx-message-square-detail'></i>
+        <h2>Automated <span>Alerts</span></h2>
+        <h3>
+          Receive immediate email notifications containing vulnerability details, severity level, and mitigation strategies.
+        </h3>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+
+      <div class="services-box">
+        <i class='bx bx-data'></i>
+        <h2>Data <span>Collection</span></h2>
+        <h3>
+          Our scrapers parse vulnerability information from trusted OEM and third-party sites, ensuring timely data for your security team.
+        </h3>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio" id="report">
+    <h2>Vulnerability <span>Report</span></h2>
+    <div class="report-container">
+      <div class="report-card">
+        <h2>Recent Vulnerability</h2>
+        <p><strong>Product:</strong> Cisco IOS</p>
+        <p><strong>Severity Level:</strong> Critical</p>
+        <p><strong>Vulnerability:</strong> Buffer Overflow Vulnerability in Cisco IOS</p>
+        <p><strong>Mitigation Strategy:</strong> Apply patch from <a href="#" class="btn">Cisco Security Advisory</a></p>
+        <p><strong>Published Date:</strong> September 2024</p>
+        <p><strong>Unique ID:</strong> CVE-2024-XXXXX</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+      <div class="report-card">
+        <h2>Recent Vulnerability</h2>
+        <p><strong>Product:</strong> Microsoft Windows</p>
+        <p><strong>Severity Level:</strong> High</p>
+        <p><strong>Vulnerability:</strong> Remote Code Execution Vulnerability in Microsoft Windows</p>
+        <p><strong>Mitigation Strategy:</strong> Install latest security updates from <a href="#" class="btn">Microsoft Security Bulletin</a></p>
+        <p><strong>Published Date:</strong> August 2024</p>
+        <p><strong>Unique ID:</strong> CVE-2024-YYYY</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+      <div class="report-card">
+        <h2>Recent Vulnerability</h2>
+        <p><strong>Product:</strong> Apache Web Server</p>
+        <p><strong>Severity Level:</strong> Medium</p>
+        <p><strong>Vulnerability:</strong> Cross-Site Scripting Vulnerability in Apache Web Server</p>
+        <p><strong>Mitigation Strategy:</strong> Upgrade to the latest version from <a href="#" class="btn">Apache Website</a></p>
+        <p><strong>Published Date:</strong> July 2024</p>
+        <p><strong>Unique ID:</strong> CVE-2024-ZZZZ</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+      <div class="report-card">
+        <h2>Recent Vulnerability</h2>
+        <p><strong>Product:</strong> Linux Kernel</p>
+        <p><strong>Severity Level:</strong> High</p>
+        <p><strong>Vulnerability:</strong> Denial of Service Vulnerability in Linux Kernel</p>
+        <p><strong>Mitigation Strategy:</strong> Apply patch from <a href="#" class="btn">Linux Kernel Security Advisory</a></p>
+        <p><strong>Published Date:</strong> June 2024</p>
+        <p><strong>Unique ID:</strong> CVE-2024-AAAA</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Contact <span>Us</span></h2>
+    <form action="#">
+      <div class="input-box">
+        <input type="text" placeholder="Full Name">
+        <input type="Email" placeholder="Email Address">  
+      </div>
+      <div class="input-box">
+        <input type="number" placeholder="Mobile Number">
+        <input type="text" placeholder="Subject">  
+      </div>
+      <textarea cols="30" rows="10" placeholder="Your message"></textarea>
+      <input type="submit" value="Send Message" class="btn">
+    </form>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-text">
+      <p>&copy; 2024 ProExtract | All rights reserved</p>
+    </div>
+    <div class="footer-icon">
+      <a href="#home">
+        <i class='bx bx-up-arrow-alt'></i>
+      </a>
+    </div>
+  </footer>
+  <script>
+   // Function to open the image in a new tab
+   function openImage(url) {
+     window.open(url, '_blank');
+   }
+
+   // Add event listeners to "Learn More" buttons
+   document.querySelectorAll('.report-card .btn').forEach(button => {
+     button.addEventListener('click', () => {
+       openImage('images/aaaa.png'); // Replace 'image.png' with your image file
+     });
+   });
+ </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
