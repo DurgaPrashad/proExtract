@@ -1,310 +1,135 @@
-# ProExtract - Web Scraper for OEM Vulnerability Reporting
+# PROEXTRACT VulnTracker - OEM Security Vulnerability Monitoring System
 
-A robust web scraping and vulnerability reporting tool designed to identify critical and high-severity vulnerabilities in OEM (Original Equipment Manufacturer) equipment across IT and OT systems.
+## Overview
+proextract is a comprehensive system for monitoring, tracking, and managing security vulnerabilities from OEM equipment manufacturers. It automatically scrapes vulnerability data from vendor websites, processes the information, and provides a user-friendly interface for security teams to manage and respond to security incidents.
 
 ## Features
+- 🔍 Automated vulnerability scanning from multiple OEM sources
+- 🚨 Focus on Critical and High severity vulnerabilities
+- 📊 Real-time dashboard with vulnerability metrics
+- 📈 Trend analysis and reporting
+- 🎯 Incident management system
+- 📧 Automated email notifications
+- 📱 Responsive web interface
 
-- 🔍 Automated vulnerability scanning for OEM equipment
-- 🏷️ Smart categorization of vulnerabilities by severity
-- 📊 Detailed reporting with export capabilities
-- 🔐 Secure user authentication
-- 🏭 Support for both IT and OT systems
+## Technology Stack
+- Backend: Python, Flask
+- Frontend: React, Tailwind CSS
+- Database: MongoDB
+- Infrastructure: Docker, Google Cloud Platform
 
-## Project Structure
-
-```bash
-proextract/
-├── backend/
-│   ├── __init__.py
-│   ├── app.py
-│   ├── models.py
-│   ├── views.py
-│   ├── utils.py
-│   ├── forms.py
-│   ├── config.py
-│   ├── scrape/
-│   │   ├── scraper.py
-│   │   └── utils.py
-│   └── requirements.txt
-├── frontend/
-│   ├── templates/
-│   │   ├── index.html
-│   │   ├── dashboard.html
-│   │   └── results.html
-│   ├── static/
-│   │   ├── css/
-│   │   └── js/
-├── migrations/
-├── tests/
-└── docker/
-```
+## Prerequisites
+- Docker and Docker Compose
+- Node.js 16+ (for local development)
+- Python 3.9+ (for local development)
+- MongoDB 5.0+ (for local development)
 
 ## Installation
 
-### Prerequisites
-
-```bash
-# Install Python 3.8+
-python --version  # Should be 3.8 or higher
-
-# Install pip dependencies
-pip install -r requirements.txt
-```
-
-### Core Dependencies
-
-```python
-# requirements.txt
-Flask==2.0.1
-SQLAlchemy==1.4.23
-BeautifulSoup4==4.9.3
-requests==2.26.0
-pandas==1.3.3
-PyJWT==2.1.0
-python-dotenv==0.19.0
-```
-
-### Quick Start
-
+### Using Docker (Recommended)
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/proextract.git
-cd proextract
+git clone https://github.com/your-org/vulntracker.git
+cd vulntracker
 ```
 
-2. Set up your environment:
+2. Create a .env file in the root directory:
 ```bash
-# Create and activate virtual environment
+MONGODB_URI=mongodb://mongodb:27017/vulntracker
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SENDER_EMAIL=your-email@example.com
+SENDER_PASSWORD=your-password
+GCP_PROJECT_ID=your-project-id
+PUBSUB_TOPIC_NAME=vulnerabilities
+```
+
+3. Build and run using Docker Compose:
+```bash
+docker-compose up --build
+```
+
+### Local Development Setup
+1. Set up the backend:
+```bash
+cd backend
 python -m venv venv
-source venv/bin/activate  # Unix
-.\venv\Scripts\activate   # Windows
-
-# Install dependencies
+source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 pip install -r requirements.txt
+python app.py
 ```
 
-3. Configure your environment variables:
+2. Set up the frontend:
 ```bash
-# .env
-DATABASE_URL=postgresql://user:password@localhost:5432/proextract
-SECRET_KEY=your-secret-key
-API_KEY=your-api-key
+cd frontend
+npm install
+npm start
 ```
 
-## Core Implementation
-
-### Database Models
-
-```python
-# backend/models.py
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
-class User(Base):
-    __tablename__ = 'users'
-    
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    email = Column(String(120), unique=True, nullable=False)
-    password_hash = Column(String(128), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-class Vulnerability(Base):
-    __tablename__ = 'vulnerabilities'
-    
-    id = Column(Integer, primary_key=True)
-    oem_id = Column(Integer, ForeignKey('oem_equipment.id'))
-    severity = Column(String(20), nullable=False)
-    description = Column(String(500), nullable=False)
-    cve_id = Column(String(20))
-    discovered_at = Column(DateTime, default=datetime.utcnow)
-```
-
-### Scraping Implementation
-
-```python
-# backend/scrape/scraper.py
-import requests
-from bs4 import BeautifulSoup
-from typing import List, Dict
-
-class OEMVulnerabilityScanner:
-    def __init__(self, base_url: str, api_key: str = None):
-        self.base_url = base_url
-        self.api_key = api_key
-        self.session = requests.Session()
-        
-    def scan_vulnerabilities(self) -> List[Dict]:
-        """Scans OEM equipment for vulnerabilities."""
-        try:
-            response = self.session.get(
-                self.base_url,
-                headers={'Authorization': f'Bearer {self.api_key}'}
-            )
-            soup = BeautifulSoup(response.text, 'html.parser')
-            
-            vulnerabilities = []
-            for vuln in soup.find_all('div', class_='vulnerability-item'):
-                vulnerability = {
-                    'severity': vuln.get('data-severity', 'Unknown'),
-                    'description': vuln.find('p', class_='description').text.strip(),
-                    'cve_id': vuln.get('data-cve-id'),
-                    'affected_systems': vuln.get('data-affected-systems', '').split(',')
-                }
-                if vulnerability['severity'].upper() in ['CRITICAL', 'HIGH']:
-                    vulnerabilities.append(vulnerability)
-                    
-            return vulnerabilities
-            
-        except requests.RequestException as e:
-            raise Exception(f"Failed to scan vulnerabilities: {str(e)}")
-```
-
-### API Implementation
-
-```python
-# backend/app.py
-from flask import Flask, request, jsonify
-from flask_jwt_extended import JWTManager, jwt_required
-from .scrape.scraper import OEMVulnerabilityScanner
-
-app = Flask(__name__)
-jwt = JWTManager(app)
-
-@app.route('/api/scan', methods=['POST'])
-@jwt_required()
-def scan_equipment():
-    """Endpoint to scan OEM equipment for vulnerabilities."""
-    data = request.get_json()
-    
-    if not data or 'url' not in data:
-        return jsonify({'error': 'Missing URL parameter'}), 400
-        
-    try:
-        scanner = OEMVulnerabilityScanner(
-            base_url=data['url'],
-            api_key=app.config['API_KEY']
-        )
-        vulnerabilities = scanner.scan_vulnerabilities()
-        
-        return jsonify({
-            'status': 'success',
-            'vulnerabilities': vulnerabilities
-        })
-        
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
-```
+3. Set up MongoDB:
+Install MongoDB and ensure it's running on port 27017.
 
 ## Usage
 
-### Basic Scanner Usage
+### Accessing the Application
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
+- MongoDB: mongodb://localhost:27017
 
-```python
-# Example usage of the vulnerability scanner
-from backend.scrape.scraper import OEMVulnerabilityScanner
+### User Roles
+- Admin: Full system access
+- Analyst: Can manage vulnerabilities and incidents
+- Viewer: Read-only access to dashboards and reports
 
-# Initialize scanner
-scanner = OEMVulnerabilityScanner(
-    base_url="https://oem-equipment-url.com",
-    api_key="your-api-key"
-)
+### Key Features
+1. Dashboard
+   - Overview of critical and high vulnerabilities
+   - Recent incidents
+   - Trend analysis
 
-# Scan for vulnerabilities
-vulnerabilities = scanner.scan_vulnerabilities()
+2. Vulnerability Management
+   - List of all vulnerabilities
+   - Filtering and sorting capabilities
+   - Detailed vulnerability information
 
-# Process results
-for vuln in vulnerabilities:
-    print(f"Severity: {vuln['severity']}")
-    print(f"Description: {vuln['description']}")
-    print(f"CVE ID: {vuln['cve_id']}")
-    print("Affected Systems:", ", ".join(vuln['affected_systems']))
-    print("-" * 50)
-```
+3. Incident Management
+   - Create and track security incidents
+   - Link vulnerabilities to incidents
+   - Document resolution steps
 
-### Docker Deployment
+4. Reporting
+   - Generate PDF reports
+   - Email distribution
+   - Custom date ranges
 
-```dockerfile
-# Dockerfile
-FROM python:3.8-slim
+## API Documentation
+The backend API provides the following endpoints:
 
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-ENV FLASK_APP=backend/app.py
-ENV FLASK_ENV=production
-
-EXPOSE 5000
-
-CMD ["flask", "run", "--host=0.0.0.0"]
-```
-
-Build and run the Docker container:
-```bash
-docker build -t proextract .
-docker run -p 5000:5000 -e DATABASE_URL=postgresql://user:pass@host:5432/db proextract
-```
-
-## Testing
-
-```python
-# tests/test_scanner.py
-import unittest
-from backend.scrape.scraper import OEMVulnerabilityScanner
-
-class TestOEMVulnerabilityScanner(unittest.TestCase):
-    def setUp(self):
-        self.scanner = OEMVulnerabilityScanner(
-            base_url="https://test-oem-url.com",
-            api_key="test-api-key"
-        )
-
-    def test_vulnerability_scanning(self):
-        vulnerabilities = self.scanner.scan_vulnerabilities()
-        self.assertIsInstance(vulnerabilities, list)
-        
-        if vulnerabilities:
-            vuln = vulnerabilities[0]
-            self.assertIn('severity', vuln)
-            self.assertIn('description', vuln)
-            self.assertIn('cve_id', vuln)
-```
-
-Run tests:
-```bash
-python -m unittest discover tests
-```
+- GET /api/vulnerabilities - List all vulnerabilities
+- POST /api/scan - Trigger vulnerability scan
+- GET /api/analytics/trend - Get vulnerability trends
+- POST /api/incidents - Create new incident
+- GET /api/dashboard/summary - Get dashboard metrics
 
 ## Contributing
-
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -am 'Add feature'`
-4. Push to branch: `git push origin feature-name`
-5. Submit a Pull Request
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## Security
+- All passwords are hashed using bcrypt
+- API endpoints are protected with authentication
+- Regular security updates for dependencies
+- Input validation and sanitization
 
 ## License
+This project is licensed under the MIT License - se
 
+## Support
+For support, please contact the security team or create an issue in the repository.
 
-
----
-
-## Security Notes
-
-- Always validate input URLs before scanning
-- Use rate limiting for API endpoints
-- Keep API keys and credentials secure
-- Regular security updates for dependencies
-- Monitor for false positives in vulnerability detection
-
-For questions or support, please open an issue or contact the maintainers.
+## Acknowledgments
+- Thanks to all OEM partners for providing security advisory feeds
+- Built with open-source software
