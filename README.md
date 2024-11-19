@@ -11,6 +11,8 @@ proextract is a comprehensive system for monitoring, tracking, and managing secu
 - 🎯 Incident management system
 - 📧 Automated email notifications
 - 📱 Responsive web interface
+![image](https://github.com/user-attachments/assets/b84a72ce-1c2b-4e8e-8adb-5eff2952cf4b)
+##(on beta updation)
 
 ## Technology Stack
 - Backend: Python, Flask
