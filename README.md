@@ -2,7 +2,8 @@
 
 ## Overview
 proextract is a comprehensive system for monitoring, tracking, and managing security vulnerabilities from OEM equipment manufacturers. It automatically scrapes vulnerability data from vendor websites, processes the information, and provides a user-friendly interface for security teams to manage and respond to security incidents.
-
+![image](https://github.com/user-attachments/assets/b84a72ce-1c2b-4e8e-8adb-5eff2952cf4b)
+##(on beta updation)
 ## Features
 - 🔍 Automated vulnerability scanning from multiple OEM sources
 - 🚨 Focus on Critical and High severity vulnerabilities
@@ -11,8 +12,7 @@ proextract is a comprehensive system for monitoring, tracking, and managing secu
 - 🎯 Incident management system
 - 📧 Automated email notifications
 - 📱 Responsive web interface
-![image](https://github.com/user-attachments/assets/b84a72ce-1c2b-4e8e-8adb-5eff2952cf4b)
-##(on beta updation)
+
 
 ## Technology Stack
 - Backend: Python, Flask
