@@ -1,137 +1,209 @@
 # PROEXTRACT VulnTracker - OEM Security Vulnerability Monitoring System
+![image](https://github.com/user-attachments/assets/9fe9ca9e-19c6-4682-8feb-2691e9e404af)
+
+
+
+> **Note: This project is currently under development and features are being actively implemented.**
 
 ## Overview
-proextract is a comprehensive system for monitoring, tracking, and managing security vulnerabilities from OEM equipment manufacturers. It automatically scrapes vulnerability data from vendor websites, processes the information, and provides a user-friendly interface for security teams to manage and respond to security incidents.
-![image](https://github.com/user-attachments/assets/b84a72ce-1c2b-4e8e-8adb-5eff2952cf4b)
-##(on beta updation)
-## Features
-- 🔍 Automated vulnerability scanning from multiple OEM sources
-- 🚨 Focus on Critical and High severity vulnerabilities
-- 📊 Real-time dashboard with vulnerability metrics
-- 📈 Trend analysis and reporting
-- 🎯 Incident management system
-- 📧 Automated email notifications
-- 📱 Responsive web interface
+A specialized web scraping tool designed to automatically search and report Critical and High Severity Vulnerabilities of OEM equipment (IT and OT). The tool continuously monitors official OEM websites and relevant security platforms to identify and alert on significant vulnerabilities that could affect your OEM infrastructure.
 
+## Key Functions
+- Automated scanning of OEM manufacturer websites for security advisories
+- Focused detection of Critical and High Severity vulnerabilities
+- Support for both IT and OT equipment vulnerabilities
+- Structured reporting of discovered vulnerabilities
+- Alert system for immediate notification of critical findings
 
-## Technology Stack
-- Backend: Python, Flask
-- Frontend: React, Tailwind CSS
-- Database: MongoDB
-- Infrastructure: Docker, Google Cloud Platform
+## Supported Data Sources
+- Official OEM vendor security pages
+- Security advisory platforms
+- CVE databases
+- Security bulletins
+- Vendor-specific notification systems
 
-## Prerequisites
-- Docker and Docker Compose
-- Node.js 16+ (for local development)
-- Python 3.9+ (for local development)
-- MongoDB 5.0+ (for local development)
+## Project Structure
+```
+vulnerability_scanner/
+│
+├── src/
+│   ├── __init__.py
+│   ├── scraper/
+│   │   ├── __init__.py
+│   │   ├── base_scraper.py
+│   │   ├── html_scraper.py
+│   │   └── api_scraper.py
+│   ├── parser/
+│   │   ├── __init__.py
+│   │   ├── vulnerability_parser.py
+│   │   └── nlp_parser.py
+│   ├── database/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   └── database.py
+│   ├── reporter/
+│   │   ├── __init__.py
+│   │   ├── report_generator.py
+│   │   └── dashboard.py
+│   ├── alerting/
+│   │   ├── __init__.py
+│   │   ├── email_alerter.py
+│   │   ├── slack_alerter.py
+│   │   └── sms_alerter.py
+│   ├── ml/
+│   │   ├── __init__.py
+│   │   └── severity_predictor.py
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── retry.py
+│   │   └── health_check.py
+│   └── logger.py
+│
+├── config/
+│   └── config.yaml
+│
+├── data/
+│   ├── vulnerabilities.db
+│   └── severity_model.pkl
+│
+├── logs/
+│   └── vulnerability_scanner.log
+│
+├── reports/
+│   └── .gitkeep
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_scraper.py
+│   ├── test_parser.py
+│   ├── test_database.py
+│   └── test_reporter.py
+│
+├── ui/
+│   ├── pages/
+│   │   ├── _app.tsx
+│   │   ├── index.tsx
+│   │   └── dashboard.tsx
+│   ├── components/
+│   │   ├── Layout.tsx
+│   │   ├── VulnerabilityTable.tsx
+│   │   └── AlertConfig.tsx
+│   └── styles/
+│       └── globals.css
+│
+├── docker/
+│   ├── Dockerfile
+│   └── docker-compose.yml
+│
+├── requirements.txt
+├── main.py
+└── README.md
+```
 
 ## Installation
-
-### Using Docker (Recommended)
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-org/vulntracker.git
-cd vulntracker
+git clone https://github.com/yourusername/oem-vulnerability-scanner.git
+cd oem-vulnerability-scanner
 ```
 
-2. Create a .env file in the root directory:
+2. Install dependencies:
 ```bash
-MONGODB_URI=mongodb://mongodb:27017/vulntracker
-SMTP_SERVER=smtp.gmail.com
-SMTP_PORT=587
-SENDER_EMAIL=your-email@example.com
-SENDER_PASSWORD=your-password
-GCP_PROJECT_ID=your-project-id
-PUBSUB_TOPIC_NAME=vulnerabilities
-```
-
-3. Build and run using Docker Compose:
-```bash
-docker-compose up --build
-```
-
-### Local Development Setup
-1. Set up the backend:
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 pip install -r requirements.txt
-python app.py
 ```
 
-2. Set up the frontend:
-```bash
-cd frontend
-npm install
-npm start
+3. Configure OEM sources:
+Edit `config/config.yaml` to specify:
+```yaml
+oem_sources:
+  - name: "Vendor1"
+    url: "https://vendor1.com/security-advisories"
+    type: "html"
+    severity_threshold: "HIGH"
+  - name: "Vendor2"
+    url: "https://vendor2.com/api/vulnerabilities"
+    type: "api"
+    api_key: "your_api_key"
 ```
-
-3. Set up MongoDB:
-Install MongoDB and ensure it's running on port 27017.
 
 ## Usage
+1. Start the scanner:
+```bash
+python main.py
+```
 
-### Accessing the Application
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-- MongoDB: mongodb://localhost:27017
+2. The tool will:
+   - Scan configured OEM websites
+   - Extract vulnerability information
+   - Filter for Critical and High severity issues
+   - Generate reports
+   - Send alerts for significant findings
 
-### User Roles
-- Admin: Full system access
-- Analyst: Can manage vulnerabilities and incidents
-- Viewer: Read-only access to dashboards and reports
+## Report Format
+Vulnerability reports include:
+- Vulnerability ID
+- Affected OEM Equipment
+- Severity Level
+- Description
+- Impact
+- Recommended Actions
+- Source URL
+- Discovery Date
 
-### Key Features
-1. Dashboard
-   - Overview of critical and high vulnerabilities
-   - Recent incidents
-   - Trend analysis
+## Adding New OEM Sources
+1. Add source details to `config/config.yaml`
+2. If needed, create a custom scraper in `src/scraper/` for specific OEM formats
+3. Test the new source using:
+```bash
+python -m tests.test_scraper --source new_oem_name
+```
 
-2. Vulnerability Management
-   - List of all vulnerabilities
-   - Filtering and sorting capabilities
-   - Detailed vulnerability information
+## Configuration
+Key settings in `config.yaml`:
+```yaml
+scanning:
+  interval: 3600          # Scan frequency in seconds
+  retry_attempts: 3       # Number of retry attempts
+  
+severity_filters:
+  - CRITICAL
+  - HIGH
 
-3. Incident Management
-   - Create and track security incidents
-   - Link vulnerabilities to incidents
-   - Document resolution steps
+alerts:
+  enabled: true
+  methods:
+    - email
+    - slack
+    - sms
+```
 
-4. Reporting
-   - Generate PDF reports
-   - Email distribution
-   - Custom date ranges
+## Development
+- Follow PEP 8 style guidelines
+- Add tests for new scrapers
+- Document new OEM source formats
+- Update severity classification rules as needed
 
-## API Documentation
-The backend API provides the following endpoints:
+## UI Access
+The dashboard is available at `http://localhost:3000` after starting the application, providing:
+- Vulnerability monitoring interface
+- Alert configuration
+- Report generation
+- Scanning status overview
 
-- GET /api/vulnerabilities - List all vulnerabilities
-- POST /api/scan - Trigger vulnerability scan
-- GET /api/analytics/trend - Get vulnerability trends
-- POST /api/incidents - Create new incident
-- GET /api/dashboard/summary - Get dashboard metrics
-
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## Security
-- All passwords are hashed using bcrypt
-- API endpoints are protected with authentication
-- Regular security updates for dependencies
-- Input validation and sanitization
+## Security Notes
+- Respect OEM website terms of service
+- Maintain appropriate scanning intervals
+- Handle vulnerability data securely
+- Follow responsible disclosure practices
 
 ## License
-This project is licensed under the MIT License - se
+MIT License - See LICENSE file
 
 ## Support
-For support, please contact the security team or create an issue in the repository.
-
-## Acknowledgments
-- Thanks to all OEM partners for providing security advisory feeds
-- Built with open-source software
+For issues and feature requests:
+1. Check existing issues
+2. Open a new issue with:
+   - OEM source details
+   - Expected behavior
+   - Current behavior
+   - Steps to reproduce
