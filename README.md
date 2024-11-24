@@ -103,8 +103,8 @@ vulnerability_scanner/
 ## Installation
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/oem-vulnerability-scanner.git
-cd oem-vulnerability-scanner
+git clone https://github.com/yourusername/vulnerability-scanner.git
+cd vulnerability-scanner
 ```
 
 2. Install dependencies:
