@@ -1,4 +1,4 @@
-# PROEXTRACT VulnTracker - OEM Security Vulnerability Monitoring System
+# PRO-EXTRACT VulnTracker - OEM Security Vulnerability Monitoring System
 ![image](https://github.com/user-attachments/assets/78039474-4754-4803-b281-79f2b2718086)
 
 
